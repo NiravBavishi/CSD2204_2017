@@ -1,0 +1,92 @@
+MariaDB [mytestdb]> INSERT INTO TBL_STUDENT VALUE(2,'abc','Male','51');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [mytestdb]> INSERT INTO TBL_STUDENT VALUE(3,'xyz','Male','52');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [mytestdb]> INSERT INTO TBL_STUDENT VALUE(4,'xyzabc','Male','53');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [mytestdb]> INSERT INTO TBL_STUDENT VALUE(5,'abcxyz','Male','54');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [mytestdb]> select * from tbl_student;
+
+
+MariaDB [mytestdb]> select * from tbl_student limit 3; // For limit the record in one page
+
+desc tbl_student // fror describe a table
+
+\\alter table
+<===============
+
+  1 | Nirav  | Male   |   50 |
+|    3 | xyz    | Male   |   52 |
+|    5 | abcxyz | Male   |   54 |
++------+--------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> desc tbl_student
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| SID    | int(5)      | YES  |     | NULL    |       |
+| SNM    | varchar(25) | YES  |     | NULL    |       |
+| GENDER | varchar(10) | YES  |     | NULL    |       |
+| AGE    | int(3)      | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> alter table tbl_student add marks int (5);
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [mytestdb]> desc tbl_student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| SID    | int(5)      | YES  |     | NULL    |       |
+| SNM    | varchar(25) | YES  |     | NULL    |       |
+| GENDER | varchar(10) | YES  |     | NULL    |       |
+| AGE    | int(3)      | YES  |     | NULL    |       |
+| marks  | int(5)      | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> select * from tbl_student;
++------+--------+--------+------+-------+
+| SID  | SNM    | GENDER | AGE  | marks |
++------+--------+--------+------+-------+
+|    1 | Nirav  | Male   |   50 |  NULL |
+|    2 | abc    | Male   |   51 |  NULL |
+|    3 | xyz    | Male   |   52 |  NULL |
+|    4 | xyzabc | Male   |   53 |  NULL |
+|    5 | abcxyz | Male   |   54 |  NULL |
++------+--------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> alter table tbl_student add city varchar (15) after gender;
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [mytestdb]> select * from tbl_student;
++------+--------+--------+------+------+-------+
+| SID  | SNM    | GENDER | city | AGE  | marks |
++------+--------+--------+------+------+-------+
+|    1 | Nirav  | Male   | NULL |   50 |  NULL |
+|    2 | abc    | Male   | NULL |   51 |  NULL |
+|    3 | xyz    | Male   | NULL |   52 |  NULL |
+|    4 | xyzabc | Male   | NULL |   53 |  NULL |
+|    5 | abcxyz | Male   | NULL |   54 |  NULL |
++------+--------+--------+------+------+-------+
+5 rows in set (0.00 sec)============================> // Alter table
+
+
+
+
+"aicd property
+rules
+port number"
+
+
