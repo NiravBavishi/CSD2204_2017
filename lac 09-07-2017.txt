@@ -1,0 +1,201 @@
+update student set city = 'York', marks = '100' where sid = 4; // for update tupple
+
+delete delete from student where sid = 123; // for delet the record
+
+select version(); // for know version
+
+select user(); // For know user
+
+select cur(date/time)();, select current_date();, select sysdate();, current_date();, current_time();, Current_timestamp(); // for know date 
+
+select avg(marks) from student; // For Average Of specific column
+
+MariaDB [mytestdb]> select sysdate(), avg(marks) from student; combination of functions
++---------------------+------------+
+| sysdate()           | avg(marks) |
++---------------------+------------+
+| 2017-09-07 18:11:58 |   200.0000 |
++---------------------+------------+
+1 row in set (0.00 sec)
+
+
+MariaDB [mytestdb]> select sysdate(), snm from student; // Same as above
++---------------------+------+
+| sysdate()           | snm  |
++---------------------+------+
+| 2017-09-07 18:13:10 | swe1 |
+| 2017-09-07 18:13:10 | swe2 |
+| 2017-09-07 18:13:10 | swe3 |
+| 2017-09-07 18:13:10 | swe4 |
+| 2017-09-07 18:13:10 | swe5 |
++---------------------+------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [mytestdb]> select concat(snm,city) from student; // for concate the columns
++------------------+
+| concat(snm,city) |
++------------------+
+| swe1York         |
+| swe2York         |
+| swe3York         |
+| swe4York         |
+| swe5York         |
++------------------+
+5 rows in set (0.05 sec)
+
+MariaDB [mytestdb]> select concat(snm,' Living In ',city) from student; // same as above
++--------------------------------+
+| concat(snm,' Living In ',city) |
++--------------------------------+
+| swe1 Living In York            |
+| swe2 Living In York            |
+| swe3 Living In York            |
+| swe4 Living In York            |
+| swe5 Living In York            |
++--------------------------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+"dif char/varchar or nchar/nvarchar or nchar/ char or varchar / nvarchar"
+
+
+create table manufacturers (code int(3) primary key, name varchar(50)); // define constrains
+create table manufacturers (code int(3), name varchar(50) primary key(code,name)); // define composite 
+
+
+
+create table products (code int (3), name varchar(50), price int(5), manufacturer int(3) references manufacturers(code), primary key(code)); // for foreign key refers specific column
+create table products (code int (3), name varchar(50), price int(5), manufacturer int(3) references manufacturers, primary key(code)); // for foreign key refers automatically to primary key
+
+MariaDB [mytestdb]> create table products (code int (3), name varchar(50), price int(5), manufacturer float(9,2) references manufacturers(code), primary key(code), foreign key (manufacturer) references manufacturer(code)); // for able level query
+
+
+ create table products (code int (3), name varchar(50), price float(9,2), manufacturer int(3), primary key(code), foreign key(code) references manufacturers(code)); // foreign key at table level
+
+
+
+
+
+ 
+ 
+ Asc Desc //////
+ 
+ 
+ | DVD drive   |
++-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> select name from products order by  price desc;
++-------------+
+| name        |
++-------------+
+| Hard drive  |
+| Monitor     |
+| DVD drive   |
+| ZIP drive   |
+| Memory      |
+| Floppy disk |
++-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> select * from products order by  price desc;
++------+-------------+--------+--------------+
+| code | name        | price  | manufacturer |
++------+-------------+--------+--------------+
+|    1 | Hard drive  | 240.00 |            5 |
+|    5 | Monitor     | 240.00 |            1 |
+|    6 | DVD drive   | 180.00 |            2 |
+|    3 | ZIP drive   | 150.00 |            4 |
+|    2 | Memory      | 120.00 |            6 |
+|    4 | Floppy disk |   5.00 |            6 |
++------+-------------+--------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> select * from products order by  name desc, manufacturer desc;
++------+-------------+--------+--------------+
+| code | name        | price  | manufacturer |
++------+-------------+--------+--------------+
+|    3 | ZIP drive   | 150.00 |            4 |
+|    5 | Monitor     | 240.00 |            1 |
+|    2 | Memory      | 120.00 |            6 |
+|    1 | Hard drive  | 240.00 |            5 |
+|    4 | Floppy disk |   5.00 |            6 |
+|    6 | DVD drive   | 180.00 |            2 |
++------+-------------+--------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mytestdb]> select * from products order by  manufacturer desc, name;
++------+-------------+--------+--------------+
+| code | name        | price  | manufacturer |
++------+-------------+--------+--------------+
+|    4 | Floppy disk |   5.00 |            6 |
+|    2 | Memory      | 120.00 |            6 |
+|    1 | Hard drive  | 240.00 |            5 |
+|    3 | ZIP drive   | 150.00 |            4 |
+|    6 | DVD drive   | 180.00 |            2 |
+|    5 | Monitor     | 240.00 |            1 |
++------+-------------+--------+--------------+
+6 rows in set (0.01 sec)
+
+MariaDB [mytestdb]> select * from products order by  manufacturer desc, name desc;
++------+-------------+--------+--------------+
+| code | name        | price  | manufacturer |
++------+-------------+--------+--------------+
+|    2 | Memory      | 120.00 |            6 |
+|    4 | Floppy disk |   5.00 |            6 |
+|    1 | Hard drive  | 240.00 |            5 |
+|    3 | ZIP drive   | 150.00 |            4 |
+|    6 | DVD drive   | 180.00 |            2 |
+|    5 | Monitor     | 240.00 |            1 |
++------+-------------+--------+--------------+
+6 rows in set (0.00 sec)
+
+
+\\\\\
+
+
+searching a specific word 
+
+estdb]> select name from products where name like '%drive%';
++------------+
+| name       |
++------------+
+| Hard drive |
+| ZIP drive  |
+| DVD drive  |
++------------+
+3 rows in set (0.03 sec)
+
+////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
