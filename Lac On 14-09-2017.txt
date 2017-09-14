@@ -63,14 +63,15 @@ Query :   select pd.name from providers pd join provides prd on pd.code = prd.pr
 
 -- 5.5
 -- Select the name of pieces provided by provider with code "HAL".
-Query :  select name from pieces where code in (select code from provides where provider = 'HAL');
+Query :  select name from pieces where code in (select piece from provides where provider = 'HAL');
 +----------+
 | name     |
 +----------+
 | Sprocket |
-| Nut      |
+| Screw    |
+| Bolt     |
 +----------+
-2 rows in set (0.00 sec)
+3 rows in set (0.00 sec)
 
 /* With EXISTS subquery */   
 -- Interesting clause
