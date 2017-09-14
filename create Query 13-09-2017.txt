@@ -1,0 +1,19 @@
+create table pieces 
+(
+	code int(3) primary key,
+	name varchar(50)
+);
+
+create table providers (code int(3) primary key, name varchar(50));
+
+create table provides 
+(
+	code int(3) auto_increment, 
+	piece int(3) references pieces(code), 
+	provider int(3) references providers(code),
+	price double(10,2) CHECK (price > 10),
+	PRIMARy KEY(code, piece, provider)
+);
+
+
+create table provides (code int(3) primary key auto_increment, piece int(3) primary key references pieces(code), provider int(3) primary key references providers(code), price double(10,2));
