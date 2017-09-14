@@ -1,0 +1,136 @@
+-- 5.1
+-- Select the name of all the pieces. 
+
+Query :  select name from pieces;
+Result :
++----------+
+| name     |
++----------+
+| Sprocket |
+| Screw    |
+| Nut      |
+| Bolt     |
++----------+
+4 rows in set (0.06 sec)
+
+
+
+-- 5.2 
+-- Select all the providers' data. 
+
+Query :  select * from providers;
++------+----------------------+
+| code | name                 |
++------+----------------------+
+| HAL  | Clarke Enterprises   |
+| RBT  | Susan Calvin Corp.   |
+| TNBC | Skellington Supplies |
++------+----------------------+
+3 rows in set (0.05 sec)
+
+ 
+-- 5.3
+-- Obtain the average price of each piece (show only the piece code and the average price).
+Query :   select pc.code, avg(prd.price) from pieces pc inner join provides prd on pc.code = prd.piece group by prd.piece;
++------+----------------+
+| code | avg(prd.price) |
++------+----------------+
+|    1 |      12.500000 |
+|    2 |      16.333333 |
+|    3 |      47.500000 |
+|    4 |       6.000000 |
++------+----------------+
+4 rows in set (0.02 sec)
+
+-- 5.4 
+-- Obtain the names of all providers who supply piece 1.
+Query :   select pd.name from providers pd join provides prd on pd.code = prd.provider where prd.piece = 1;
++--------------------+
+| name               |
++--------------------+
+| Clarke Enterprises |
+| Susan Calvin Corp. |
++--------------------+
+2 rows in set (0.00 sec)
+
+/* Without subquery */
+ 
+             
+/* With subquery */
+ 
+
+
+
+-- 5.5
+-- Select the name of pieces provided by provider with code "HAL".
+Query :  select name from pieces where code in (select code from provides where provider = 'HAL');
++----------+
+| name     |
++----------+
+| Sprocket |
+| Nut      |
++----------+
+2 rows in set (0.00 sec)
+
+/* With EXISTS subquery */   
+-- Interesting clause
+
+
+
+-- 5.6
+-- ---------------------------------------------
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- Intereting and important one.
+-- For each piece, find the most expensive offering of that piece and include the piece name, provider name, and price 
+-- (note that there could be two providers who supply the same piece at the most expensive price).
+
+
+Query :   select t3.name,t2.name, max(t1.price) from provides t1 inner join providers t2 on t1.provider = t2.code inner join pieces t3 on t1.piece = t3.code group by (t1.piece);
++----------+--------------------+---------------+
+| name     | name               | max(t1.price) |
++----------+--------------------+---------------+
+| Sprocket | Clarke Enterprises |         15.00 |
+| Screw    | Clarke Enterprises |         20.00 |
+| Nut      | Susan Calvin Corp. |         50.00 |
+| Bolt     | Clarke Enterprises |          7.00 |
++----------+--------------------+---------------+
+4 rows in set (0.00 sec)
+
+ 
+
+-- 5.7
+-- Add an entry to the database to indicate that "Skellington Supplies" (code "TNBC") will provide sprockets (code "1") for 7 cents each.
+
+Query :  insert into provides values(1,'TNBC',0.07);
+
+-- 5.8
+-- Increase all prices by one cent.
+
+Query :  update provides set price = price + 0.07;
++------+-------+----------+-------+
+| Code | Piece | Provider | Price |
++------+-------+----------+-------+
+|    1 |     1 | HAL      | 10.07 |
+|    2 |     1 | RBT      | 15.07 |
+|    3 |     2 | HAL      | 20.07 |
+|    4 |     2 | RBT      | 15.07 |
+|    5 |     2 | TNBC     | 14.07 |
+|    6 |     3 | RBT      | 50.07 |
+|    7 |     3 | TNBC     | 45.07 |
+|    8 |     4 | HAL      |  5.07 |
+|    9 |     4 | RBT      |  7.07 |
+|   10 |     1 | TNBC     |  0.14 |
++------+-------+----------+-------+
+10 rows in set (0.00 sec)
+
+
+-- 5.9
+-- Update the database to reflect that "Susan Calvin Corp." (code "RBT") will not supply bolts (code 4).
+
+QUERY : delete from provides where provider = 'rbt' and piece = 4;
+
+-- 5.10
+-- Update the database to reflect that "Susan Calvin Corp." (code "RBT") will not supply any pieces 
+-- (the provider should still remain in the database).
+
+QUERY : delete from provides where provider = 'RBT';
