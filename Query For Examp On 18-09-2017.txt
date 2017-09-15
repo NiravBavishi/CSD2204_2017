@@ -51,3 +51,16 @@ CREATE TABLE client
 	AccountNumber int(10) PRIMARY KEY,
 	name varchar(50)
 );
+
+
+
+
+Seq For Creating  
+>> Employee
+>> Shipment
+>> Package
+>> Has_Clearance
+>> Planet
+>> Client
+
+
