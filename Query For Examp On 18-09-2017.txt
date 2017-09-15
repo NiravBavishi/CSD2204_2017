@@ -1,0 +1,53 @@
+create table employee 
+(
+	employeeID int(10), 
+	name varchar (50), 
+	position varchar(50), 
+	salary int(10),
+	remarks varchar(100),
+	primary key(employeeID)
+);
+
+CREATE TABLE shipment 
+(
+	shipmentID int(10),
+	shipmentDate date,
+	manager int(10) reference employee(employeeID),
+	planet int(10) reference planet(planetID),
+	primary key (shipmentID)
+);
+
+
+CREATE TABLE planet
+(
+	planetID int(10),
+	name varchar(50),
+	coordinates double(15,5),
+	PRIMARY KEY (planetID)
+);
+
+CREATE TABLE has_clearance
+(
+	employee int(10) reference employee(employeeID),
+	planet int(10), reference planet(planetID),
+	level int(3),
+	PRIMARY KEY(employee, planet)
+);
+
+CREATE TABLE package 
+(
+	shipment int(10) reference shipment(shipmentID),
+	packageNumber int(20),
+	contents varchar(100),
+	weight int(10),
+	sender int(10) reference client(AccountNumber),
+	recipient int(10) reference client(AccountNumber),
+	PRIMARY KEY(shipment,packageNumber)
+);
+
+
+CREATE TABLE client 
+(
+	AccountNumber int(10) PRIMARY KEY,
+	name varchar(50)
+);
