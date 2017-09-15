@@ -12,8 +12,8 @@ CREATE TABLE shipment
 (
 	shipmentID int(10),
 	shipmentDate date,
-	manager int(10) reference employee(employeeID),
-	planet int(10) reference planet(planetID),
+	manager int(10) references employee(employeeID),
+	planet int(10) references planet(planetID),
 	primary key (shipmentID)
 );
 
@@ -28,20 +28,20 @@ CREATE TABLE planet
 
 CREATE TABLE has_clearance
 (
-	employee int(10) reference employee(employeeID),
-	planet int(10), reference planet(planetID),
+	employee int(10) references employee(employeeID),
+	planet int(10) references planet(planetID),
 	level int(3),
 	PRIMARY KEY(employee, planet)
 );
 
 CREATE TABLE package 
 (
-	shipment int(10) reference shipment(shipmentID),
+	shipment int(10) references shipment(shipmentID),
 	packageNumber int(20),
 	contents varchar(100),
 	weight int(10),
-	sender int(10) reference client(AccountNumber),
-	recipient int(10) reference client(AccountNumber),
+	sender int(10) references client(AccountNumber),
+	recipient int(10) references client(AccountNumber),
 	PRIMARY KEY(shipment,packageNumber)
 );
 
