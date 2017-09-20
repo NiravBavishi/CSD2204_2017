@@ -1,0 +1,135 @@
+Procidure 
+
+For Create >>
+
+DELIMITER //
+
+CREATE PROCEDURE sp_first() 
+
+BEGIN
+
+	SELECT * FROM products;
+	
+END;//
+
+DELIMITER;
+
+
+For Call proc >>
+
+CALL name of Proc;
+
+
+DELIMITER //
+
+CREATE or REPLACE PROCEDURE sp_second(mid INT(10))
+	BEGIN
+		SELECT * FROM products where manufacturer = mid;
+		select @mname := name from manufacturers where code = mid;
+		SELECT *,@mname FROM products where manufacturer = mid;
+	END;//
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE or REPLACE PROCEDURE sp_second(a int(3), b int(3))
+	BEGIN
+		 
+			if a<10 then set @sum = a+b; 
+			elseif a>10 then set @sum = a-b;
+			
+			end if;
+			select @sum;
+			
+		
+	END;//
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE or REPLACE PROCEDURE sp_third(a int, b int, opt char)
+	BEGIN
+		 
+		 CASE
+		 
+		 WHEN (opt = '+') THEN SET @sum = a+b;
+		 
+		 WHEN (opt = '-') THEN SET @sum = a-b;
+		 
+		 WHEN (opt = '*') THEN SET @sum = a*b;
+		 
+		 WHEN (opt = '/') THEN SET @sum = a/b;
+		 
+		 END CASE;
+			select @sum;
+			
+		
+	END;//
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE or REPLACE PROCEDURE sp_4th(in n int, out sum int)
+	BEGIN
+		 
+			
+		
+	END;//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<     Cursor      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Create Cursor 
+
+
+CREATE PROCEDURE SP5 (X VARCHAR(5))
+BEGIN
+	DECLARE XNAME VARCHAR(25) DEFAULT 'None';
+	DECLARE XPRICE DECIMAL(10,0);
+	DECIMAL XCODE INT;
+	DECLARE done TINYINT DEFAULT 0;
+	DECLARE cur1 CURSOR FOR SELECT  code, name, price from products
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE = 1;
+
+	OPEN cur1;
+	read_loop: LOOP
+		FETCH FROM cur1 INTO xcode, xname, xprice;
+		IF done THEN LEAVE read_loop; END if;
+		SELECT xcode, xname, xprice;
+		END LOOP;
+		CLOSE cur1;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
